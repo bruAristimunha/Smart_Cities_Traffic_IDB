@@ -212,9 +212,12 @@ def main(args):
 
     # Sao Paulo
     # import pdb; pdb.set_trace()
-    sp_df_30min_345 = pd.read_csv(args.sp_30min_345, parse_dates=['time_hm'])
+    sp_df_30min_345 = pd.read_parquet(args.sp_30min_345)
+    sp_df_30min_345['time_hm'] = pd.to_datetime(sp_df_30min_345['time_hm'])
     sp_df_30min_345['length'] = sp_df_30min_345['length'] / 1000
-    sp_df_30min_45 = pd.read_csv(args.sp_30min_45, parse_dates=['time_hm'])
+
+    sp_df_30min_45 = pd.read_parquet(args.sp_30min_45)
+    sp_df_30min_45['time_hm'] = pd.to_datetime(sp_df_30min_45['time_hm'])
     sp_df_30min_45['length'] = sp_df_30min_45['length'] / 1000
 
     # street option
@@ -726,12 +729,14 @@ def main(args):
                 df7 = df6[['time_hm', 'new_street', 'length']].groupby(['time_hm', 'new_street']).mean().reset_index()
                 df8 = df7[['time_hm', 'length']].groupby(['time_hm']).sum().reset_index()
 
-                hist_45 = pd.read_csv(args.sp_30min_345, parse_dates=['time_hm'])
+                hist_45 = pd.read_csv(args.historico_30min_45,
+                                      parse_dates=['time_hm'])
                 hist_45['time_hm'] = hist_45['time_hm'].dt.strftime('%H:%M')
 
                 # Figura
-                hist_345 = pd.read_csv(args.sp_30min_345, parse_dates=['time_hm'])
-                hist_345['time_hm'] = hist_345['time_hm'].dt.strftime('%H:%M')
+                hist_345 = pd.read_csv(args.historico_30min_345,
+                                      parse_dates=['time_hm'])
+                hist_345['time_hm'] = hist_45['time_hm'].dt.strftime('%H:%M')
 
                 fig = go.Figure()
                 fig.add_trace(go.Scatter(x=hist_345['time_hm'], y=hist_345['mean'], name='Baseline',
@@ -786,11 +791,10 @@ def main(args):
                 df7 = df6[['time_hm', 'new_street', 'length']].groupby(['time_hm', 'new_street']).mean().reset_index()
                 df8 = df7[['time_hm', 'length']].groupby(['time_hm']).sum().reset_index()
 
-                hist_45 = pd.read_csv(args.sp_30min_45, parse_dates=['time_hm'])
-                hist_45['time_hm'] = hist_45['time_hm'].dt.strftime('%H:%M')
 
                 # Figura
-                hist_45 = pd.read_csv(args.sp_30min_45, parse_dates=['time_hm'])
+                hist_45 = pd.read_csv(args.historico_30min_45)
+                hist_45['time_hm'] = pd.to_datetime(hist_45['time_hm'])
                 hist_45['time_hm'] = hist_45['time_hm'].dt.strftime('%H:%M')
 
                 fig = go.Figure()
@@ -856,9 +860,24 @@ if __name__ == '__main__':
     parser.add_argument(
         "--sp_30min_45",
         type=str,
-        default="../data/sp_30min_345.csv",
+        default="../data/sp_30min_45.csv",
         help="Define datapath to historic alert 4 and 5.",
     )
+
+    parser.add_argument(
+        "--historico_30min_345",
+        type=str,
+        default="../data/historico_345.csv",
+        help="Define datapath to historic alert 3, 4 and 5.",
+    )
+
+    parser.add_argument(
+        "--historico_30min_45",
+        type=str,
+        default="../data/historico_45.csv",
+        help="Define datapath to historic alert 4 and 5.",
+    )
+
 
     parser.add_argument(
         "--option_list",
