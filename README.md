@@ -23,3 +23,12 @@ O relatório [Congestionamento_v2.pdf](https://github.com/diluisi/BID/blob/main/
 Abaixo está a visão geral da arquitetura:
 
 ![image](https://user-images.githubusercontent.com/6492834/125698215-cc2f93e2-eb5b-41ad-8bb4-6500df0480d2.png)
+
+------
+
+Para
+
+
+ pip install aws-shell
+
+
