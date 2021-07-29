@@ -853,14 +853,14 @@ if __name__ == '__main__':
     parser.add_argument(
         "--sp_30min_345",
         type=str,
-        default="../data/sp_30min_345.csv",
+        default="../data/sp_30min_345.parquet",
         help="Define datapath to historic alert 3, 4 and 5.",
     )
 
     parser.add_argument(
         "--sp_30min_45",
         type=str,
-        default="../data/sp_30min_45.csv",
+        default="../data/sp_30min_45.parquet",
         help="Define datapath to historic alert 4 and 5.",
     )
 
