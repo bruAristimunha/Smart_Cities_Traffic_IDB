@@ -844,7 +844,7 @@ def main(args):
     def update_options(region):
         return [{"label": i, "value": i} for i in sorted(option_list[option_list['city'] == region].street.unique())]
 
-    app.run_server(debug=True, port=8886)
+    app.run_server(debug=False, port=8000)
 
 
 if __name__ == '__main__':

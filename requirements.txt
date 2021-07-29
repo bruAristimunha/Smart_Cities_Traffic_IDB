@@ -12,3 +12,4 @@ pydeck==0.6.2
 plotly==5.1.0
 Shapely==1.7.1
 requests==2.26.0
+gunicorn
